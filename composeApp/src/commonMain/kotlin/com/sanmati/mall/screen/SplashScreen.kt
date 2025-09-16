@@ -33,7 +33,10 @@ fun SplashScreen(navController: NavHostController)
             when(SharedPreference.getString("user_type"))
             {
                 "admin" -> {
-                    navController.navigate("admin")
+                    navController.navigate("admin") {
+                        popUpTo("splash") { inclusive = true } // remove splash from back stack
+                        launchSingleTop = true
+                    }
                 }
                 /*"buyer" -> {
                     navController.navigate("buyer")
