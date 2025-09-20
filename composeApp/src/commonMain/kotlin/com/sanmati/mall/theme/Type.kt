@@ -29,37 +29,44 @@ val Typography: Typography @Composable get() = Typography(
     bodyLarge = TextStyle(
         fontFamily = LatoFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 17.sp,
+        fontSize = 16.sp,
         lineHeight = 24.sp
     ),
     bodyMedium = TextStyle(
         fontFamily = LatoFontFamily,
         fontWeight = FontWeight.Medium,
-        fontSize = 15.sp,
+        fontSize = 14.sp,
         lineHeight = 20.sp
     ),
     bodySmall = TextStyle(
         fontFamily = LatoFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 15.sp,
-        lineHeight = 20.sp
+        fontSize = 12.sp,
+        lineHeight = 16.sp
     ),
     titleLarge = TextStyle(
         fontFamily = LatoFontFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 32.sp,
-        lineHeight = 36.sp
+        fontSize = 22.sp,
+        lineHeight = 28.sp
+    ),
+    titleMedium = TextStyle(
+        fontFamily = LatoFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 18.sp,
+        lineHeight = 24.sp
     ),
     titleSmall = TextStyle(
         fontFamily = LatoFontFamily,
         fontWeight = FontWeight.Medium,
-        fontSize = 17.sp,
-        lineHeight = 24.sp
+        fontSize = 16.sp,
+        lineHeight = 22.sp
     ),
-    headlineLarge =  TextStyle(
+    headlineLarge = TextStyle(
         fontFamily = LatoFontFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 20.sp,
-    ),
+        fontSize = 24.sp,
+        lineHeight = 32.sp
+    )
 )
 

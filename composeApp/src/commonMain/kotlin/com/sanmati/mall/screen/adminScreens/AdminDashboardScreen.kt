@@ -43,13 +43,12 @@ fun AdminDashboardScreen(navController: NavHostController) {
 
     Scaffold(bottomBar = {
         AdminBottomNav(adminNavController)
-    }) {innerPadding ->
+    }) { innerPadding ->
         Row {
-            Box() {
-                Column {
-                    AdminAppNavHost(adminNavController)
+            Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
 
-                }
+                AdminAppNavHost(navController ,adminNavController)
+                
             }
         }
 

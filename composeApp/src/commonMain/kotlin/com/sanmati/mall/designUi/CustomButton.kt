@@ -1,5 +1,6 @@
 package com.sanmati.mall.designUi
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 
@@ -15,6 +16,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -102,6 +104,52 @@ fun CustomButton(
             defaultElevation = 4.dp,
             pressedElevation = 2.dp,
             disabledElevation = 0.dp
+        )
+    ) {
+        if (isLoading) {
+            CircularProgressIndicator(
+                color = contentColor,
+                modifier = Modifier.size(20.dp),
+                strokeWidth = 2.dp
+            )
+        } else {
+            Text(
+                text = text,
+                style = textStyle,
+                color = contentColor
+            )
+        }
+    }
+}
+
+@Composable
+fun CustomOutlineButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    text: String,
+    enabled: Boolean = true,
+    isLoading: Boolean = false,
+    borderColor: Color = PrimaryDark,                 // Outline color
+    contentColor: Color = PrimaryDark,               // Text/Icon color
+    disabledBorderColor: Color = PrimaryDark.copy(alpha = 0.5f),
+    disabledContentColor: Color = OnSurfaceVariant.copy(alpha = 0.5f),
+    shape: Shape = CircleShape,
+    textStyle: TextStyle = MaterialTheme.typography.bodyMedium.copy(
+        fontWeight = FontWeight.SemiBold
+    ),
+) {
+    OutlinedButton(
+        onClick = onClick,
+        modifier = modifier.height(48.dp),
+        enabled = enabled && !isLoading,
+        shape = shape,
+        colors = ButtonDefaults.outlinedButtonColors(
+            contentColor = contentColor,
+            disabledContentColor = disabledContentColor
+        ),
+        border = BorderStroke(
+            width = 1.dp,
+            color = if (enabled) borderColor else disabledBorderColor
         )
     ) {
         if (isLoading) {

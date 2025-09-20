@@ -13,35 +13,36 @@ import com.sanmati.mall.screen.adminScreens.AdminSettingsScreen
 
 @Composable
 fun AdminAppNavHost(
-    navController: NavHostController,
+    mainNavController: NavHostController,
+    adminNavController: NavHostController,
     startDestination: String = AdminNavItems.Home.route
 )
 {
-    NavHost(navController = navController,startDestination = startDestination )
+    NavHost(navController = adminNavController,startDestination = startDestination )
     {
         composable(AdminNavItems.Home.route)
         {
-            AdminHomeScreen(navController)
+            AdminHomeScreen(adminNavController)
         }
         composable(AdminNavItems.Product.route)
         {
-            AdminProductScreen(navController)
+            AdminProductScreen(mainNavController, adminNavController)
         }
         composable(AdminNavItems.Parties.route)
         {
-            AdminPartiesScreen(navController)
+            AdminPartiesScreen(adminNavController)
         }
         composable(AdminNavItems.Sales.route)
         {
-            AdminSalesScreen(navController)
+            AdminSalesScreen(adminNavController)
         }
         composable(AdminNavItems.Purchase.route)
         {
-            AdminPurchaseScreen(navController)
+            AdminPurchaseScreen(adminNavController)
         }
         composable(AdminNavItems.Settings.route)
         {
-            AdminSettingsScreen(navController)
+            AdminSettingsScreen(adminNavController)
         }
     }
 }

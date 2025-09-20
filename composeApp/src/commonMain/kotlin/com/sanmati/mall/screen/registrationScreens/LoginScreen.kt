@@ -226,18 +226,23 @@ fun LoginForm(
 ) {
     val focusManager = LocalFocusManager.current
 
-    // ✅ Collect API events only once
+    // ✅ Collect API events
     LaunchedEffect(Unit) {
         viewModel.apiEvents.collect { event ->
             when (event) {
+                is ApiEvents.Loading -> {
+                    onLoadingChange(true)
+                }
                 is ApiEvents.Success -> {
-                    snackbarHostState.showSnackbar(event.message)
                     onLoadingChange(false)
-                    navController.navigate("admin")
+                    snackbarHostState.showSnackbar(event.message)
+                    navController.navigate("admin") {
+                        popUpTo("login") { inclusive = true } // ✅ Prevent going back to login
+                    }
                 }
                 is ApiEvents.Error -> {
-                    snackbarHostState.showSnackbar(event.message)
                     onLoadingChange(false)
+                    snackbarHostState.showSnackbar(event.message)
                 }
             }
         }
@@ -285,7 +290,6 @@ fun LoginForm(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // ✅ Button with loading state
         CustomButton(
             text = if (isLoading) "" else "Login",
             onClick = {
@@ -294,8 +298,7 @@ fun LoginForm(
                         snackbarHostState.showSnackbar("Invalid Credentials")
                     }
                 } else {
-                    onLoadingChange(true)
-                    viewModel.performLogin(mobileNumber, password) // trigger API
+                    viewModel.performLogin(mobileNumber, password) // triggers Loading event
                 }
             },
             isLoading = isLoading,

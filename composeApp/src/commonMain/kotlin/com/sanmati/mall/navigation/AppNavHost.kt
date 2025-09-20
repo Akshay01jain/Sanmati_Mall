@@ -13,6 +13,7 @@ import com.sanmati.mall.navigation.customerNavigation.CustomerAppNavHost
 import com.sanmati.mall.screen.registrationScreens.LoginScreen
 import com.sanmati.mall.screen.SplashScreen
 import com.sanmati.mall.screen.adminScreens.AdminDashboardScreen
+import com.sanmati.mall.screen.adminScreens.items.AddUnitScreen
 
 @Composable
 fun AppNavHost(
@@ -40,10 +41,33 @@ fun AppNavHost(
         when (SharedPreference.getString("user_type")) {
             "admin" -> {
 
-                composable(NavItems.UserType.Admin.route)
-                {
-                    AdminDashboardScreen(navController)
-                }
+                    navigation(
+                        route = NavItems.UserType.Admin.route,
+                        startDestination = NavItems.UserType.Admin.Dashboard.route
+                    )
+                    {
+                        composable(NavItems.UserType.Admin.Dashboard.route)
+                        {
+                            AdminDashboardScreen(navController)
+                        }
+                        composable(NavItems.UserType.Admin.Search.route)
+                        {
+
+                        }
+                        composable(NavItems.UserType.Admin.AddProduct.route)
+                        {
+
+                        }
+                        composable(NavItems.UserType.Admin.AddCategory.route)
+                        {
+
+                        }
+                        composable(NavItems.UserType.Admin.AddUnit.route)
+                        {
+                            AddUnitScreen(navController)
+                        }
+                    }
+
             }
 
             "buyer" -> {

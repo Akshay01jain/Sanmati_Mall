@@ -21,6 +21,8 @@ class LoginViewModel : ViewModel() {
             val authApi = APIsCalling(client)
 
             try {
+                _apiEvents.emit(ApiEvents.Loading)
+
                 val response = authApi.login(LoginRequest(userMobileNumber, userPassword))
 
                 if (response.status == 200) {
@@ -37,4 +39,5 @@ class LoginViewModel : ViewModel() {
             }
         }
     }
+
 }
