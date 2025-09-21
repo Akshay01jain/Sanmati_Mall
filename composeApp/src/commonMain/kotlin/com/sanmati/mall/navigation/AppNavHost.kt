@@ -13,6 +13,7 @@ import com.sanmati.mall.navigation.customerNavigation.CustomerAppNavHost
 import com.sanmati.mall.screen.registrationScreens.LoginScreen
 import com.sanmati.mall.screen.SplashScreen
 import com.sanmati.mall.screen.adminScreens.AdminDashboardScreen
+import com.sanmati.mall.screen.adminScreens.items.AddCategoryScreen
 import com.sanmati.mall.screen.adminScreens.items.AddUnitScreen
 
 @Composable
@@ -60,7 +61,7 @@ fun AppNavHost(
                         }
                         composable(NavItems.UserType.Admin.AddCategory.route)
                         {
-
+                            AddCategoryScreen(navController)
                         }
                         composable(NavItems.UserType.Admin.AddUnit.route)
                         {

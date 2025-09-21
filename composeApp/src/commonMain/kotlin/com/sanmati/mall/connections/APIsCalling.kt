@@ -2,6 +2,8 @@ package com.sanmati.mall.connections
 
 import com.sanmati.mall.commonUtils.Constant
 import com.sanmati.mall.model.ApiResponse
+import com.sanmati.mall.model.CategoryRequest
+import com.sanmati.mall.model.CategoryResponse
 import com.sanmati.mall.model.LoginRequest
 import com.sanmati.mall.model.LoginResponse
 import com.sanmati.mall.model.UnitRequest
@@ -71,7 +73,7 @@ class APIsCalling (private val client : HttpClient)
     * CATEGORIES
     * */
     //GET Categories List
-    suspend fun getCategories(search: String? = null, accessToken: String): ApiResponse<List<UnitResponse>> {
+    suspend fun getCategories(search: String? = null, accessToken: String): ApiResponse<List<CategoryResponse>> {
         val url = buildString {
             append(Constant.CATEGORIES)
             if (!search.isNullOrEmpty()) append("?search=$search")
@@ -81,18 +83,26 @@ class APIsCalling (private val client : HttpClient)
             header("Authorization", "Bearer $accessToken")
             accept(ContentType.Application.Json)
         }.body()
-
-
     }
 
-    //Add Unit
-    suspend fun addCategories(request: UnitRequest, accessToken : String): ApiResponse<String> {
+    suspend fun addCategory(request: CategoryRequest, accessToken: String): ApiResponse<String> {
         return client.post(Constant.CATEGORIES) {
             header("Authorization", "Bearer $accessToken")
             contentType(ContentType.Application.Json)
             setBody(request)
         }.body()
     }
+
+    suspend fun deleteCategory(categoryId: Int?, accessToken: String): ApiResponse<String> {
+        val url = "${Constant.CATEGORIES_DELETE}?id=$categoryId"
+        return client.delete(url) {
+            header("Authorization", "Bearer $accessToken")
+            contentType(ContentType.Application.Json)
+            accept(ContentType.Application.Json)
+        }.body()
+    }
+
+
 
 
 

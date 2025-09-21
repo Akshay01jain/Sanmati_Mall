@@ -30,7 +30,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
@@ -39,19 +38,17 @@ import androidx.navigation.NavHostController
 import com.sanmati.mall.designUi.CustomButton
 import com.sanmati.mall.designUi.CustomOutlineButton
 import com.sanmati.mall.designUi.FilledTextField
-import com.sanmati.mall.viewModel.UnitsViewModel
+import com.sanmati.mall.viewModel.CategoryViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddUnitScreen(
+fun AddCategoryScreen(
     navController: NavHostController,
-    viewModel: UnitsViewModel = remember { UnitsViewModel() }
-
+    viewModel: CategoryViewModel = remember { CategoryViewModel() }
 ) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     var name by remember { mutableStateOf("") }
-    var code by remember { mutableStateOf("") }
 
     // Separate loading states for each button
     var isLoadingStay by remember { mutableStateOf(false) }
@@ -59,10 +56,10 @@ fun AddUnitScreen(
 
     val focusManager = LocalFocusManager.current
 
-    Scaffold(
+    Scaffold (
         topBar = {
             TopAppBar(
-                title = { Text("Add Unit", style = MaterialTheme.typography.titleMedium) },
+                title = { Text("Add Category", style = MaterialTheme.typography.titleMedium) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.Rounded.ArrowBackIosNew, contentDescription = "Back")
@@ -86,27 +83,14 @@ fun AddUnitScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            // Unit Name field
+            // Category Name field
             FilledTextField(
                 text = name,
                 onValidate = { input ->
                     name = input.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
                 },
-                labelText = "Unit Name",
-                placeholderText = "Enter unit name",
-                singleLine = true,
-                keyBoardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                keyBoardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) })
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Unit Code field
-            FilledTextField(
-                text = code,
-                onValidate = { input -> code = input.uppercase().take(5) },
-                labelText = "Unit Code",
-                placeholderText = "e.g. PCS",
+                labelText = "Category Name",
+                placeholderText = "Enter category name",
                 singleLine = true,
                 keyBoardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 keyBoardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
@@ -123,38 +107,36 @@ fun AddUnitScreen(
                 CustomOutlineButton(
                     text = if (isLoadingStay) "" else "Add New",
                     onClick = {
-                        if (name.isNotBlank() && code.length in 2..5) {
+                        if (name.isNotBlank()) {
                             isLoadingStay = true
-                            viewModel.addUnit(name, code, snackbarHostState) {
+                            viewModel.addCategory(name, snackbarHostState) {
                                 name = ""
-                                code = ""
                                 isLoadingStay = false
                             }
                         }
                     },
                     isLoading = isLoadingStay,
-                    enabled = !isLoadingStay && name.isNotBlank() && code.length in 2..5,
+                    enabled = !isLoadingStay && name.isNotBlank(),
                     modifier = Modifier.weight(1f)
                 )
 
                 // Add & Go Back (Filled)
                 CustomButton(
-                    text = if (isLoadingGoBack) "" else "Add Unit",
+                    text = if (isLoadingGoBack) "" else "Add Category",
                     onClick = {
-                        if (name.isNotBlank() && code.length in 2..5) {
+                        if (name.isNotBlank()) {
                             isLoadingGoBack = true
-                            viewModel.addUnit(name, code, snackbarHostState) {
+                            viewModel.addCategory(name, snackbarHostState) {
                                 isLoadingGoBack = false
                                 navController.popBackStack()
                             }
                         }
                     },
                     isLoading = isLoadingGoBack,
-                    enabled = !isLoadingGoBack && name.isNotBlank() && code.length in 2..5,
+                    enabled = !isLoadingGoBack && name.isNotBlank(),
                     modifier = Modifier.weight(1f)
                 )
             }
         }
     }
 }
-

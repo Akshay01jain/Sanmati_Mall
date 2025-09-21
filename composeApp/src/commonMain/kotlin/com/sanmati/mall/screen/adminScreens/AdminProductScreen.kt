@@ -39,9 +39,9 @@ fun AdminProductScreen(mainNavController: NavHostController,adminNavController: 
 
     val tabItems = listOf(
         ProductNavItems.Products,
-        ProductNavItems.Companies,
         ProductNavItems.Categories,
         ProductNavItems.Units,
+        ProductNavItems.Companies
     )
 
     val currentBackStack by localNavController.currentBackStackEntryAsState()
@@ -86,9 +86,9 @@ fun AdminProductScreen(mainNavController: NavHostController,adminNavController: 
                     modifier = Modifier.fillMaxSize()
                 ) {
                     composable(ProductNavItems.Products.route) { ProductScreens() }
-                    composable(ProductNavItems.Companies.route) { CompanyScreen() }
-                    composable(ProductNavItems.Categories.route) { CategoriesScreen() }
+                    composable(ProductNavItems.Categories.route) { CategoriesScreen(mainNavController) }
                     composable(ProductNavItems.Units.route) { UnitsScreen(mainNavController) }
+                    composable(ProductNavItems.Companies.route) { CompanyScreen() }
 
                 }
             }

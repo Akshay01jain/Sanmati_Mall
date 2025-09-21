@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
@@ -34,12 +35,12 @@ fun ProductTabRow(
     indicatorColor: Color = PrimaryDark,
     onClick: (selectedIndex: Int) -> Unit
 ) {
-
-    TabRow(
+    ScrollableTabRow(
         modifier = modifier,
-        divider = { HorizontalDivider(color = dividerColor) },
-        containerColor = containerColor,
         selectedTabIndex = selectedTabIndex,
+        edgePadding = 0.dp, // removes extra spacing at start & end
+        containerColor = containerColor,
+        divider = { HorizontalDivider(color = dividerColor) },
         indicator = { tabPositions ->
             if (selectedTabIndex < tabPositions.size) {
                 SecondaryIndicator(
@@ -50,28 +51,22 @@ fun ProductTabRow(
                     color = indicatorColor
                 )
             }
-        },
-        tabs = {
-            tabItems.forEachIndexed { index, item ->
-                Tab(
-                    selected = (index == selectedTabIndex),
-                    onClick = {
-                        onClick(index)
-                    },
-                    text = {
-                        Text(
-                            text = item.title,
-                            style = if (index == selectedTabIndex) selectedTextStyle else unSelectedTextStyle,
-                            modifier = Modifier.padding(vertical = 6.dp)
-                        )
-                    },
-                    icon = null,
-                    selectedContentColor = selectedContentColor,
-                    unselectedContentColor = unselectedContentColor
-                )
-            }
         }
-    )
-
-
+    ) {
+        tabItems.forEachIndexed { index, item ->
+            Tab(
+                selected = (index == selectedTabIndex),
+                onClick = { onClick(index) },
+                text = {
+                    Text(
+                        text = item.title,
+                        style = if (index == selectedTabIndex) selectedTextStyle else unSelectedTextStyle,
+                        modifier = Modifier.padding(vertical = 6.dp, horizontal = 12.dp)
+                    )
+                },
+                selectedContentColor = selectedContentColor,
+                unselectedContentColor = unselectedContentColor
+            )
+        }
+    }
 }
